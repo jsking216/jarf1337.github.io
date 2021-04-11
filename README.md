@@ -1,2 +1,2 @@
-# jarf1337.github.io
+# jsking.github.io
 Joshua King's github page repo
