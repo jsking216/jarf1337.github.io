@@ -3,7 +3,7 @@
     <strong v-if="cookies.get('visited') !== true">Welcome first-timer!</strong>
     <strong v-else>Welcome back!</strong>
     <hr>
-    <pre>{{ cookies.getAll() }}</pre>
+    <pre>{{ JSON.stringify(cookies.getAll()) }}</pre>
     <button @click="cookies.set('visited', 'false')">Set cookie to false</button>
   </div>
 </template>
