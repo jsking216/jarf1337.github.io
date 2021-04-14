@@ -1,4 +1,5 @@
 <template>
+  <WeatherInfo />
   <CookieInfo />
   <img alt="Vue logo" src="./assets/logo.png">
   <HelloWorld msg="Welcome to Your Vue.js App"/>
@@ -7,12 +8,14 @@
 <script>
 import HelloWorld from './components/HelloWorld.vue';
 import CookieInfo from './components/CookieInfo.vue';
+import WeatherInfo from './components/WeatherInfo.vue';
 
 export default {
   name: 'App',
   components: {
     HelloWorld,
-    CookieInfo
+    CookieInfo,
+    WeatherInfo
   }
 }
 </script>

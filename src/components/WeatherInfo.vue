@@ -8,10 +8,12 @@
 <script>
 export default {
   name: "DemoComponent",
-  data:{
+  data: function() {
+    return {
     location:null,
     errorStr:null
-  },
+  };
+},
   created() {
     this.$getLocation()
       .then((coordinates) => {
