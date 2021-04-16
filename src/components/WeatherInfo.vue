@@ -1,14 +1,16 @@
 <template>
   <div>
     <span v-if="errorStr === null">Your location is {{ JSON.stringify(location) }}</span>
-    <span v-else>{{ errorStr }}</span>
-    <span v-if="errorStr === null">Your weather is {{ JSON.stringify(weather) }}</span>
+    <span v-else>{{ errorStr }}</span><br /><br />
+    <span v-if="weather !== null">Should you mow? {{ shouldMow ? 'YES!' : 'NO!' }}</span><br /><br />
+    <span v-if="weather !== null">Should you sprinkle? {{ shouldSprinkle ? 'YES!' : 'NO!' }}</span><br /><br />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import { getSessionStorage, setSessionStorage } from '../util/storage';
+import { shouldMowOrSprinkle } from '../util/weather';
 
 export default {
   name: "DemoComponent",
@@ -17,6 +19,8 @@ export default {
     location:null,
     errorStr:null,
     weather: null,
+    shouldMow: false,
+    shouldSprinkle: false,
   };
   },
   mounted () {
@@ -36,10 +40,17 @@ export default {
       });
     } else {
       this.weather = getSessionStorage('weather');
+      // can't directly assign to this when destructuring
+      const { shouldMow, shouldSprinkle } = shouldMowOrSprinkle(this.weather);
+      this.shouldMow = shouldMow;
+      this.shouldSprinkle = shouldSprinkle;
     }
   },
   watch: {
     weather(newWeather) {
+      const { shouldMow, shouldSprinkle } = shouldMowOrSprinkle(newWeather);
+      this.shouldMow = shouldMow;
+      this.shouldSprinkle = shouldSprinkle;
       setSessionStorage('weather', newWeather);
     }
   }
