@@ -20,7 +20,7 @@ export default {
   };
   },
   mounted () {
-    if (getSessionStorage('weather') === null ) {
+    if (getSessionStorage('weather') === null) {
     this.$getLocation()
       .then((coordinates) => {
         this.location = coordinates;
