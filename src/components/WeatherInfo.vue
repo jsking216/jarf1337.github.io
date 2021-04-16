@@ -8,6 +8,7 @@
 
 <script>
 import axios from 'axios';
+import { getSessionStorage, setSessionStorage } from '../util/storage';
 
 export default {
   name: "DemoComponent",
@@ -19,6 +20,7 @@ export default {
   };
   },
   mounted () {
+    if (getSessionStorage('weather') === null ) {
     this.$getLocation()
       .then((coordinates) => {
         this.location = coordinates;
@@ -32,7 +34,14 @@ export default {
         this.errorStr = error.message;
         console.log(error);
       });
-    
+    } else {
+      this.weather = getSessionStorage('weather');
+    }
   },
+  watch: {
+    weather(newWeather) {
+      setSessionStorage('weather', newWeather);
+    }
+  }
 };
 </script>
