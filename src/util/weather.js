@@ -4,14 +4,15 @@ export const shouldMowOrSprinkle = (weather) => {
             daily
         } 
     } = weather;
-    let shouldMow, shouldSprinkle = true;
     let daysWithoutRain = 0;
     for (const day of daily) {
-        if (day.pop < 25 && day.rain === 'undefined') {
+        if (day.pop < 0.25 && day.rain === undefined) {
             daysWithoutRain++;
-        } else break;
+        } else {
+            break;
+        }
     }
-    shouldMow = (daysWithoutRain < 3);
-    shouldSprinkle = (daysWithoutRain > 3);
+    const shouldMow = (daysWithoutRain < 3);
+    const shouldSprinkle = (daysWithoutRain > 3);
     return { shouldMow, shouldSprinkle };
 };
