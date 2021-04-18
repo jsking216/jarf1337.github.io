@@ -2,8 +2,8 @@
   <div>
     <span v-if="errorStr === null">Your location is {{ JSON.stringify(location) }}</span>
     <span v-else>{{ errorStr }}</span><br /><br />
-    <span v-if="weather !== null">Should you mow? {{ shouldMow ? 'YES!' : 'NO!' }}</span><br /><br />
-    <span v-if="weather !== null">Should you sprinkle? {{ shouldSprinkle ? 'YES!' : 'NO!' }}</span><br /><br />
+    <span v-if="weather !== null">Should you mow?</span><img v-if="weather !== null" v-bind:src="mowImage" /><br /><br />
+    <span v-if="weather !== null">Should you sprinkle?</span><img v-if="weather !== null" v-bind:src="sprinkleImage" /><br /><br />
   </div>
 </template>
 
@@ -11,6 +11,10 @@
 import axios from 'axios';
 import { getSessionStorage, setSessionStorage } from '../util/storage';
 import { shouldMowOrSprinkle } from '../util/weather';
+
+const loadingImg = '../assets/thinking.gif';
+const mowImages = ['../assets/thumbs-up.jpg', '../assets/thumbs-up.jpg'];
+const sprinkleImages = ['../assets/sprinkle.jpg', '../assets/no-sprinkle.jpg'];
 
 export default {
   name: "DemoComponent",
@@ -21,6 +25,8 @@ export default {
     weather: null,
     shouldMow: false,
     shouldSprinkle: false,
+    mowImage: loadingImg,
+    sprinkleImage: loadingImg,
   };
   },
   mounted () {
@@ -44,6 +50,8 @@ export default {
       const { shouldMow, shouldSprinkle } = shouldMowOrSprinkle(this.weather);
       this.shouldMow = shouldMow;
       this.shouldSprinkle = shouldSprinkle;
+      this.mowImage = shouldMow ? mowImages[0] : mowImages[1];
+      this.sprinkleImage = shouldMow ? sprinkleImages[0] : sprinkleImages[1];
     }
   },
   watch: {
@@ -51,6 +59,8 @@ export default {
       const { shouldMow, shouldSprinkle } = shouldMowOrSprinkle(newWeather);
       this.shouldMow = shouldMow;
       this.shouldSprinkle = shouldSprinkle;
+      this.mowImage = shouldMow ? mowImages[0] : mowImages[1];
+      this.sprinkleImage = shouldMow ? sprinkleImages[0] : sprinkleImages[1];
       setSessionStorage('weather', newWeather);
     }
   }
